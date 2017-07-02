@@ -1,0 +1,154 @@
+<div  class="container" ng-controller="requestController">
+    <br><br><br>
+    <div class="row show-hide-message" ng-show="successfull">
+        <div class="alert alert-success"> <strong>Success! </strong> Request Sent Successfully</div>
+    </div>
+    <div class="row show-hide-message" ng-show="error">
+        <div class="alert alert-danger"><strong>Danger! </strong>Some required fields are missing</div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Send Request</h4>
+        </div>
+        <div class="panel-body">
+            <div>
+
+
+                <table class="table">
+                    <tbody>
+
+                    <tr>
+                        <td><h4>Department</h4></td>
+                        <td>
+
+                            <select class="form-control" ng-model="department">
+                                <option value="" hidden>Choose here</option>
+                                <option value="IPD Pharmacy">IPD Pharmacy</option>
+                                <option value="OPD Pharmacy">OPD Pharmacy</option>
+                            </select>
+
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td><h4>Category</h4></td>
+                        <td>
+
+                            <select class="form-control" ng-model="category" ng-click="clickedCategory(category)">
+                                <option value="" hidden>Choose here</option>
+                                <option value={{drug.category}}  ng-repeat="drug in categoryList "  >{{drug.category}}</option>
+
+                            </select>
+
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!-- second panal-->
+            <div ng-show="beforeCategory">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Drug Details</strong>
+                </div>
+                <div class="panel-body">
+
+
+
+                        <table class="table">
+                            <tbody>
+
+                            <tr>
+                                <td><h4>Drug Name</h4></td>
+                                <td>
+                                    <select class="form-control" ng-model="drug.name">
+                                        <option value="" hidden>Choose here</option>
+                                        <option value={{drug.name}}  ng-repeat="drug in categoryDrugList">{{drug.name}}</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><h4>Request Quantity</h4></td>
+                                <td><input class="form-control" ng-model="reQuantity" placeholder="please enter quantity" required only-digits></td>
+                            </tr>
+
+                            <tr>
+                                <td><h4>Drug Type</h4></td>
+                                <td>
+                                    <select class="form-control" ng-model="drug.type">
+                                        <option value="" hidden>Choose here</option>
+                                        <option value={{drug.type}}  ng-repeat="drug in availableDrugList">{{drug.type}}</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        <button class="btn btn-warning" ng-click="sendRequest(category,reQuantity,department,drug.name,drug.type)">Send Request</button>
+
+
+
+                </div>
+            </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div id="scrollable-area" ng-show="aftercategoryTable">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>Sent Details</strong>
+        </div>
+        <div class="panel-body">
+
+
+
+                <table class="table">
+                    <thead>
+
+                    <tr>
+
+                        <th>Drug Name</th>
+                        <th>Drug Type</th>
+                        <th>Requested Quantity</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="drug in sentList">
+
+                        <td>{{drug.drug_name}}</td>
+                        <td>{{drug.Type}}</td>
+                        <td>{{drug.requested_quantity}}</td>
+                        <!--  <td><button class="btn btn-warning" ng-click="sendRequest(reQuantity,department,drug._id,drug.name,drug.quantity)">Send Request</button> </td> -->
+                    </tr>
+                    </tbody>
+                </table>
+
+
+
+        </div>
+    </div>
+    </div>
+
+
+</div>

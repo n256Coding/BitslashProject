@@ -1,0 +1,104 @@
+<div ng-controller="drugRequestController">
+    <br><br>  <br>
+
+    <div style="padding: 10px;">
+    <div class="row">
+        <div class="col-md-6 panel panel-default">
+            <div class="panel-heading">
+                <h2>Current Requests</h2>
+            </div>
+            <!--<select ng-model="Suppliers" ng-options="drug.provider for drug in drugs" class="form-control"></select>-->
+            <div class="panel-body">
+                <div style="max-height: 650px; overflow-y: auto">
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <!-- <th>RequestID</th>
+                            <th>drugID</th> -->
+                            <th>Name</th>
+                            <!-- <th>requested_quantity</th> -->
+                            <!-- <th>Available quantity</th> -->
+                            <!-- <th>department</th> -->
+                            <!-- <th>approve</th> -->
+                            <th>Approved quantity</th>
+                            <!-- <th>status</th> -->
+                            <!-- <th>Date</th> -->
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="drugRequest in drugRequests">
+                            <!-- <td>{{drugRequest.RequestID}}</td> -->
+                            <!-- <td>{{drugRequest.drugID}}</td> -->
+                            <td>{{drugRequest.drug_name}}</td>
+                            <!-- <td>{{drugRequest.requested_quantity}}</td> -->
+                            <!-- <td>{{drugRequest.available_quantity}}</td> -->
+                            <!-- <td>{{drugRequest.department}}</td> -->
+                            <!-- <td>{{drugRequest.approve}}</td> -->
+                            <td>{{drugRequest.approved_quantity}}</td>
+                            <!-- <td>{{drugRequest.status}}</td> -->
+                            <!-- <td>{{drugRequest.date}}</td> -->
+                            <td><input type="button" ng-click="addToSupplierRequest(drugRequest)" value="+" class="btn btn-success"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="alert alert-success" ng-show="showSuccessMessage">
+                        <span><strong>No Requests</strong></span><span id="validationReason" style="visibility: collapse"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2>Make an Order</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="form-inline">
+                        <label for="supplier">Select Supplier: </label>
+                        <!-- //TODO (Place) drug table reading place -->
+                        <select ng-model="supplierToSend" ng-options="drug.provider for drug in drugs track by drug.providerEmail" class="form-control" ng-change="okForOrder = true" id="supplier"></select>
+                    </div>
+                    <div style="max-height: 650px; overflow-y: auto">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <!-- <th>RequestID</th> -->
+                                <!-- <th>drugID</th> -->
+                                <th>Name</th>
+                                <!-- <th>requested_quantity</th> -->
+                                <!-- <th>available_quantity</th> -->
+                                <!-- <th>department</th> -->
+                                <!-- <th>approve</th> -->
+                                <th>Quantity</th>
+                                <!-- <th>status</th> -->
+                                <!-- <th>date</th> -->
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="drugRequest in supplierRequestList">
+                                <!--<td>{{drugRequest.RequestID}}</td>
+                                <td>{{drugRequest.drugID}}</td> -->
+                                <td>{{drugRequest.drug_name}}</td>
+                                <!-- <td>{{drugRequest.requested_quantity}}</td>
+                                <td>{{drugRequest.available_quantity}}</td>
+                                <td>{{drugRequest.department}}</td>
+                                <td>{{drugRequest.approve}}</td> -->
+                                <td>{{drugRequest.approved_quantity}}</td>
+                                <!-- <td>{{drugRequest.status}}</td>
+                                <td>{{drugRequest.date}}</td> -->
+                                <td><input type="button" ng-click="removeFromSupplierRequest(drugRequest)" value="-" class="btn btn-danger"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a class="btn btn-primary" ng-href="#emailSender" ng-click="setupEmailPage(supplierRequestList)" ng-disabled="!okForOrder">Place Order</a>
+                        <!-- <input type="button" ng-model="makeMailButton" ng-disabled="!okForOrder" ng-click="setupEmailPage(supplierRequestList)" value="Make a Mail" class="btn btn-primary"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

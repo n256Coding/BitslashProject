@@ -1,0 +1,53 @@
+
+
+
+<div class="row show-hide-message" ng-show="SucessMsg">
+    <div class="alert alert-success"> <strong>Success! </strong>{{rightMsg}}</div>
+</div>
+
+
+
+
+<div class="row show-hide-message" ng-show="errorMsg">
+    <div class="alert alert-danger"> <strong>Danger! </strong>{{wrongMsg}}</div>
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+
+
+            <h4>User Login</h4>
+
+    </div>
+    <div class="panel-body">
+
+        <form>
+            <label>Username </label>
+            <input class="form-control" type="text" name="username" placeholder="please enter username" ng-model="username">
+            <br>
+
+            <label>Password </label>
+            <input class="form-control" type="password" name="password" placeholder="please enter password" ng-model="password" >
+            <br>
+            <button class="btn btn-primary" type="submit" ng-click="loginUser(username,password)">Login</button>
+
+
+        </form>
+
+    </div>
+</div>
+
+
+
+    <br>
+
+    <div class="jumbotron text-center" ng-show="loading">
+        <span class="glyphicon glyphicon-repeat spinner"></span>
+        <p>Loading....</p>
+    </div>
+
+
+
+
+

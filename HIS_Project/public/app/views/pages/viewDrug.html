@@ -1,0 +1,189 @@
+<div ng-controller="viewDrugController" class="panel panel-default" >
+    <br><br><br><br>
+    <div class="panel-heading">
+        <h3 class="panel-title">view Drug</h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label class="sr-only" for="searchtxtBox">Drug Name</label>
+                <input type="text" class="form-control" id="searchtxtBox" ng-model="searchTxt"
+                       placeholder="Search by drug name | type | category | price | qty | Reorder level | Danger Level | Remarks">
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div id="drugTable" style="overflow-x:auto">
+    <table class="table table-hover">
+        <thead>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Category</td>
+        <td>Price</td>
+        <td>Reorder Level</td>
+        <td>Danger Level</td>
+        <td>Provider</td>
+        <td>Provider E-mail</td>
+        <td>Remarks</td>
+        </thead>
+        <tr ng-repeat="drug in drugDetailsList">
+            <td>{{drug.name}}</td>
+            <td>{{drug.type}}</td>
+            <td>{{drug.category}}</td>
+            <td>{{drug.price}}</td>
+            <td>{{drug.reorderLvl}}</td>
+            <td>{{drug.dangerLvl}}</td>
+            <td>{{drug.provider}}</td>
+            <td>{{drug.providerEmail}}</td>
+            <td>{{drug.remarks}}</td>
+            <td><input type="button" a href="#updateDrugModal" class="btn btn-warning" data-toggle="modal"
+                       value="Edit" data-target="#updateDrugModal" ng-click="saveVariableId(drug)"></td>
+        </tr>
+    </table>
+
+    <div class="modal fade" id="updateDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Update drug details</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="panel-body">
+                            <form name="myForm" class="addDrugForm" ng-submit="updateDrugDetails()" required>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Drug Name</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-model="name" name="nameTxtBox"
+                                               placeholder="Drug Name" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.nameTxtBox.$touched && myForm.nameTxtBox.$invalid">Drug name is required.</span>
+                                    </div>
+                                </div>
+                                <br><br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Type</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-change="getDrugTypes()"
+                                               ng-model="type" name="typeTxtBox"
+                                               placeholder="Drug Type" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.typeTxtBox.$touched && myForm.typeTxtBox.$invalid">Drug type is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Category</label>
+                                    <div class="col-sm-7">
+                                        <input name="categoryTextBox" ng-model="category"
+                                               class="form-control" placeholder="add new Drug Category" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.categoryTextBox.$touched && myForm.categoryTextBox.$invalid">Drug category is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Price</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="price"
+                                               name="priceTxtBox"
+                                               placeholder="Price" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.priceTxtBox.$touched && myForm.priceTxtBox.$invalid">price is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Re-Order Level</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="reorderLvl"
+                                               name="reOrderLvlTxtBox"
+                                               placeholder="Re-Order Level" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.reOrderLvlTxtBox.$touched && myForm.reOrderLvlTxtBox.$invalid">Reorder level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Danger Level</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="dangerLvl"
+                                               name="dangerLvlTxtBox"
+                                               placeholder="Danger Level" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.dangerLvlTxtBox.$touched && myForm.dangerLvlTxtBox.$invalid">Danger level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Provider</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-model="provider"
+                                               name="providerTxtBox"
+                                               placeholder="Drug Provider">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.providerTxtBox.$touched && myForm.providerTxtBox.$invalid">Provider is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Provider Email</label>
+                                    <div class="col-sm-7">
+                                        <input type="email" class="form-control" ng-model="providerEmail"
+                                               name="providerEmailTxtBox"
+                                               placeholder="Drug Provider E-mail">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.providerEmailTxtBox.$touched && myForm.providerEmailTxtBox.$invalid">Provider Email is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Remarks</label>
+                                    <div class="col-sm-7">
+                                        <textarea name="remarksTxtArea" class="form-control" ng-model="remarks"
+                                                  rows="3"
+                                                  placeholder="Remarks...."></textarea>
+                                    </div>
+                                </div>
+                                <br><br><br><br><br>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+

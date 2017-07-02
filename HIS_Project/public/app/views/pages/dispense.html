@@ -1,0 +1,212 @@
+<div class="container"  ng-controller="dispenseController">
+
+
+    <br><br><br>
+    <div class="row show-hide-message" ng-show="info">
+        <div class="alert alert-info"><strong>Info!</strong> No any matching Patient(Display all patients prescriptions for today)</div>
+    </div>
+
+    <div>
+    <form class="form-inline">
+        <div class="form-group">
+            <h4>Search(Patient ID)</h4>
+        </div>
+        <div style="float:right; width: 900px" rightclass="form-group">
+
+            <input class="form-control" placeholder="please enter patient Id" ng-model="drugSearch" ng-keyup="searchDrug(drugSearch)" only-digits>
+        </div>
+
+    </form>
+
+    <br><br>
+</div>
+
+
+
+
+
+
+    <div ng-show = "IsVisible">
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <form class="form-inline">
+                    <div class="form-group">
+                        <h4>Prescription</h4>
+                    </div>
+                    <div style="float: right" class="form-group">
+
+                        <input  placeholder="Limit to" class="form-control" ng-model="limitKeywordP" only-digits>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="panel-body">
+            <div ng-show = "prescription" id="prescriptions-area" >
+
+
+                <table class="table"  >
+                    <thead>
+
+                    <tr>
+                        <th>Patitent ID</th>
+                        <th>Presciption ID</th>
+                        <th>Create Date</th>
+                        <th>Prescription Date</th>
+                        <th>Action</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--
+                    <tr>
+                        <td><input class="form-control" ng-model="drug.patientID"></td>
+                        <td><input class="form-control" ng-model="drug.prescriptionID"></td>
+                        <td><input class="form-control" ng-model="drug.createDate"></td>
+                        <td><input class="form-control" ng-model="drug.prescriptionDate"></td>
+                        <td><button class="btn btn-primary" ng-click="addDrug()">Add</button></td>
+                        <td><button class="btn btn-info" ng-click="updateDrug()">Update</button></td>
+                        <td>    <button class="btn btn-info" ng-click="clearDrug()">Clear</button></td>
+                    </tr>
+                    -->
+                    <tr ng-repeat="drug in drugList | limitTo:limitKeywordP | filter:searchKeywordP ">
+                        <td>{{drug.patientID}}</td>
+                        <td>{{drug.prescriptionID}}</td>
+                        <td>{{drug.createDate}}</td>
+                        <td>{{drug.prescriptionDate}}</td>
+                        <!-- <td><button class="btn btn-danger" ng-click="removeDrug(drug._id)">Remove</button> </td>
+                         <td><button class="btn btn-warning" ng-click="editDrug(drug._id)">Edit</button> </td>
+                         -->
+                        <td><button class="btn btn-info" ng-click="viewDespence(drug.prescriptionID)">View & Despence</button> </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div ng-show = "despence" id="prescription-area">
+
+
+
+
+
+                <table class="table" >
+                    <thead>
+
+                    <tr>
+                        <th>prescription ID</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Period</th>
+                        <th>Quantity</th>
+                        <th>Despense</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="drug in drugPrescriptionList">
+                        <td>{{drug.prescriptionNo}}</td>
+                        <td>{{drug.drugDescription}}</td>
+                        <td>{{drug.Type}}</td>
+                        <td>{{drug.dosage}}</td>
+                        <td>{{drug.frequency}}</td>
+                        <td>{{drug.period}}</td>
+                        <td >{{drug.quantity}}</td>
+                        <td>{{drug.despense}}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <form class="form-inline">
+                    <div style="float: right"  class="form-group">
+
+                        <div  ng-show = "despencebtn">
+                            <button class="btn btn-warning"  ng-click="viewPrescription(drugPrescriptionList)" >Despence</button>
+                        </div>
+
+                    </div>
+                    <div style="float: right;padding-right: 10px " class="form-group">
+
+                        <button class="btn btn-info"  ng-click="Back()" >Back</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    </div>
+
+
+    <div id="scrollable-area">
+
+        <div class="panel-group">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <h4>Drugs</h4>
+                        </div>
+                        <div style="float:right" rightclass="form-group">
+
+                            <input  placeholder="Limit to" class="form-control" ng-model="limitKeyword" only-digits>
+                        </div>
+                        <div style="float: right;padding-right: 10px " class="form-group">
+
+                            <input type="text" placeholder="search by name" class="form-control" ng-model="searchKeyword">
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+
+                            <th>Drug Name</th>
+                            <th>Drug Type</th>
+                            <th>Drug Quantity</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-repeat="drug in availableDrugList | filter: searchKeyword | limitTo:limitKeyword" >
+
+                            <td>{{drug.name}}</td>
+                            <td>{{drug.type}}</td>
+                            <td>{{drug.quantity}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+            </div>
+
+
+
+
+    </div>
+
+</div>
+
+

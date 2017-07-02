@@ -1,0 +1,126 @@
+<div  class="container" ng-controller="newperscriptionConntroller">
+
+<br><br><br>
+    <div class="row show-hide-message" ng-show="error">
+        <div class="alert alert-danger"><strong>Danger! </strong>Some required fields are missing</div>
+    </div>
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+
+            <h3>New Prescription</h3>
+
+        </div>
+        <div class="panel-body">
+
+
+
+            <label>Patient ID</label>
+            <select class="form-control" ng-model="patient">
+                <option value="" hidden>Choose here</option>
+                <option value={{patient.PatientId}}  ng-repeat="patient in patientList | orderBy: 'PatientId' as sortedPlaces"
+                        data-ng-if="sortedPlaces[$index-1].PatientId != patient.PatientId ">{{patient.PatientId}}</option>
+
+            </select>
+
+
+            <label>Prescription ID</label>
+            <input class="form-control" ng-model="prescriptionNo" disabled>
+
+            <br>
+
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+
+                        <tr>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Dosage</th>
+                            <th>Frequency(per day)</th>
+                            <th>Period(Num of Days)</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+
+                            <!--  <td><input class="form-control" ng-model="drug.drugDescription"></td> -->
+                            <td>
+                                <select class="form-control" ng-model="drug.drugDescription">
+                                    <option value="" hidden>Description</option>
+                                    <option value={{drug.name}}  ng-repeat="drug in availableDrugList | orderBy: 'name' as sortedPlaces"
+                                            data-ng-if="sortedPlaces[$index-1].name != drug.name ">{{drug.name}}</option>
+
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" ng-model="drug.Type">
+                                    <option value="" hidden>Type</option>
+                                    <option value={{drug.type}}  ng-repeat="drug in availableDrugList | orderBy: 'type' as sortedPlaces"
+                                            data-ng-if="sortedPlaces[$index-1].type != drug.type">{{drug.type}}</option>
+
+                                </select>
+                            </td>
+
+
+                            <td><input class="form-control" ng-model="drug.dosage" placeholder="dosage" required only-digits></td>
+                            <!--  <td><input class="form-control" ng-model="drug.frequency"></td> -->
+                            <td>
+                                <select class="form-control" ng-model="drug.frequency">
+                                    <option value="" hidden>Choose here</option>
+                                    <option value="1">Once per day</option>
+                                    <option value="2">Twice per day</option>
+                                    <option value="3">Three times per day</option>
+                                    <option value="4">Four times per day</option>
+                                    <option value="5">Five times per day</option>
+
+                                </select>
+
+                            </td>
+                            <!-- <td><input class="form-control" ng-model="drug.period"></td> -->
+                            <td>
+                                <input class="form-control" ng-model="drug.period" placeholder="Period(Num of Days)" required only-digits>
+                            </td>
+                            <!--    <td><input class="form-control" ng-model="drug.quantity" placeholder="quantity" required only-digits></td> -->
+
+                            <td><button class="btn btn-primary" ng-click="addDrug(patient,prescriptionNo,drug.Type,drug.dosage,drug.drugDescription,drug.frequency,drug.period)">Add</button></td>
+                            <td><button class="btn btn-info" ng-click="updateDrug(prescriptionNo,drug.Type,drug.dosage,drug.drugDescription,drug.frequency,drug.period)">Update</button></td>
+                            <td><button class="btn btn-info" ng-click="newPrescription()">New Prescription</button></td>
+                        </tr>
+                        <tr ng-repeat="drug in drugList">
+
+                            <td>{{drug.drugDescription}}</td>
+                            <td>{{drug.Type}}</td>
+                            <td>{{drug.dosage}}</td>
+                            <td>{{drug.frequency}}</td>
+                            <td>{{drug.period}}</td>
+
+
+                            <td><button class="btn btn-danger" ng-click="removeDrug(drug._id,prescriptionNo)">Remove</button> </td>
+                            <td><button class="btn btn-warning" ng-click="editDrug(drug._id)">Edit</button> </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+</div>

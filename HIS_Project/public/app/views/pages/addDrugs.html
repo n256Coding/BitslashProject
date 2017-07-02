@@ -1,0 +1,378 @@
+<div class="panel panel-default" id="pageSelector"><!-- ng-init="getDrugTypes()-->
+    <br/><br/><br/><br/>  <br><br>
+
+    <div ng-cloak>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <!-- add drug by excel file----------------------------------------------------------------- -->
+                <md-tab label="Add new Drug by EXCEL File">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Add new Drugs by EXCEL file</h1>
+
+                        <div style="height: 100px;padding-left: 15px ; height: 130px">
+                            <div class="col-sm-12" style="padding-top: 15px">
+                            </div>
+
+
+                            <div class="col-sm-12">
+                                <form ng-controller="uploadCtrl as up" name="up.upload_form">
+                                    <div class="col-sm-3">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="file"
+                                               ngf-select
+                                               ng-model="up.file"
+                                               name="file"
+                                               ngf-pattern="'.xlsx,.xls'"
+                                               accept=".xlsx,.xls"
+                                               ngf-max-size="20MB"
+                                        />
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <button type="submit" ng-click="up.submit(up.file)">submit</button>
+                                    </div>
+                                    <br><br><br>
+
+                                    <div class="col-sm-12">
+                                        <p>{{up.progress}}</p>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </md-content>
+
+                </md-tab>
+
+                <!-- add drug manually------------------------------------------------------------------------ -->
+                <md-tab label="Add new Drug manually">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Add new Drug manually</h1>
+                        <div class="panel-body" ng-controller="viewDrugController">
+                            <form name="myForm" class="addDrugForm" ng-submit="addNewDrug()" required>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Drug Name</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-model="drug.name" name="nameTxtBox"
+                                               placeholder="Drug Name" ng-keydown="checkKeyDown($event)"
+                                               ng-keyup="checkKeyUp($event)" ng-change="getDrugTypes()" required>
+                                        <ul class="suggestions-list">
+                                            <li ng-repeat="suggestion in suggestions track by $index"
+                                                ng-class="{active : selectedIndex === $index}"
+                                                ng-click="AssignValueAndHide($index)">{{suggestion}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.nameTxtBox.$touched && myForm.nameTxtBox.$invalid">Drug name is required.</span>
+                                    </div>
+                                </div>
+                                <br><br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Type</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-change="getDrugTypes()"
+                                               ng-model="drug.type" name="typeTxtBox"
+                                               placeholder="Drug Type" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.typeTxtBox.$touched && myForm.typeTxtBox.$invalid">Drug type is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Category</label>
+                                    <div class="col-sm-7">
+                                        <input name="categoryTextBox" ng-model="drug.category"
+                                               class="form-control" placeholder="add new Drug Category" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.categoryTextBox.$touched && myForm.categoryTextBox.$invalid">Drug category is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Price</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drug.price"
+                                               name="priceTxtBox"
+                                               placeholder="Price" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.priceTxtBox.$touched && myForm.priceTxtBox.$invalid">price is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Re-Order Level</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drug.reorderLvl"
+                                               name="reOrderLvlTxtBox"
+                                               placeholder="Re-Order Level" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.reOrderLvlTxtBox.$touched && myForm.reOrderLvlTxtBox.$invalid">Reorder level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Danger Level</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drug.dangerLvl"
+                                               name="dangerLvlTxtBox"
+                                               placeholder="Danger Level" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.dangerLvlTxtBox.$touched && myForm.dangerLvlTxtBox.$invalid">Danger level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Provider</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-model="drug.provider"
+                                               name="providerTxtBox"
+                                               placeholder="Drug Provider">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.providerTxtBox.$touched && myForm.providerTxtBox.$invalid">Provider is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Provider Email</label>
+                                    <div class="col-sm-7">
+                                        <input type="email" class="form-control" ng-model="drug.providerEmail"
+                                               name="providerEmailTxtBox"
+                                               placeholder="Drug Provider E-mail">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="myForm.providerEmailTxtBox.$touched && myForm.providerEmailTxtBox.$invalid">Provider Email is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Remarks</label>
+                                    <div class="col-sm-7">
+                                        <textarea name="remarksTxtArea" class="form-control" ng-model="drug.remarks"
+                                                  rows="3"
+                                                  placeholder="Remarks...."></textarea>
+                                    </div>
+                                </div>
+                                <br><br><br><br><br>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Add Drug</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-- add received drug by excel file------------------------------------------------------------------------ -->
+                <md-tab label="Add received Drug to Stock by EXCEL File">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Add received Drugs by EXCEL file</h1>
+                        <div style="height: 100px;padding-left: 15px ; height: 130px">
+                            <div class="col-sm-12" style="padding-top: 15px">
+                            </div>
+
+                            <div class="col-sm-12">
+                                <form ng-controller="uploadCtrl2 as up1" name="up1.upload_form">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3">
+                                        <input type="file"
+                                               ngf-select
+                                               ng-model="up1.file"
+                                               name="file"
+                                               ngf-pattern="'.xlsx,.xls'"
+                                               accept=".xlsx,.xls"
+                                               ngf-max-size="20MB"
+                                        />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="submit" ng-click="up1.submit(up.file)">submit</button>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                    <br><br><br>
+                                    <div class="col-sm-12">
+                                        <p>{{up1.progress}}</p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-- add received drug manually ------------------------------------------------------------ -->
+                <md-tab label="Add received Drug to Stock manually">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Add received Drug manually to Stock</h1>
+                        <div class="panel-body" ng-controller="viewDrugController">
+                            <form name="addDrugForm" class="addDrugFormclass" ng-submit="addtoDrugStock()" required>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Drug Name</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-model="drugs.name" name="nameTxtBox2"
+                                               placeholder="Drug Name" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.nameTxtBox2.$touched && addDrugForm.nameTxtBox2.$invalid">Drug name is required.</span>
+                                    </div>
+                                </div>
+                                <br><br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Type</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control"
+                                               ng-model="drugs.type" name="typeTxtBox2"
+                                               placeholder="Drug Type" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.typeTxtBox2.$touched && addDrugForm.typeTxtBox2.$invalid">Drug type is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Category</label>
+                                    <div class="col-sm-7">
+                                        <input name="categoryTextBox2" ng-model="drugs.category"
+                                               class="form-control" placeholder="add new Drug Category" required>
+                                        </datalist>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.categoryTextBox2.$touched && addDrugForm.categoryTextBox2.$invalid">Drug category is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Price</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drugs.price"
+                                               name="priceTxtBox2"
+                                               placeholder="Price" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.priceTxtBox2.$touched && addDrugForm.priceTxtBox2.$invalid">price is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Re-Order Level</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drugs.reorderLvl"
+                                               name="reOrderLvlTxtBox2"
+                                               placeholder="Re-Order Level" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.reOrderLvlTxtBox2.$touched && addDrugForm.reOrderLvlTxtBox2.$invalid">Reorder level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Danger Level</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drugs.dangerLvl"
+                                               name="dangerLvlTxtBox2"
+                                               placeholder="Danger Level" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.dangerLvlTxtBox2.$touched && addDrugForm.dangerLvlTxtBox2.$invalid">Danger level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Quantity</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" min="0" class="form-control" ng-model="drugs.qty"
+                                               name="dangerQtyTxtBox2"
+                                               placeholder="Quantity received" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.dangerQtyTxtBox2.$touched && addDrugForm.dangerQtyTxtBox2.$invalid">Danger level is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Exp Date</label>
+                                    <div class="col-sm-7">
+                                        <md-datepicker ng-model="drugs.expDate" name=ExpSelector2"
+                                                       md-placeholder="Enter date"></md-datepicker>
+                                    </div>
+
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Provider</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" ng-model="drugs.provider"
+                                               name="providerTxtBox2"
+                                               placeholder="Drug Provider">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.providerTxtBox2.$touched && addDrugForm.providerTxtBox2.$invalid">Provider is required.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Provider Email</label>
+                                    <div class="col-sm-7">
+                                        <input type="email" class="form-control" ng-model="drugs.providerEmail"
+                                               name="providerEmailTxtBox2"
+                                               placeholder="Drug Provider E-mail">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span ng-show="addDrugForm.providerEmailTxtBox2.$touched && addDrugForm.providerEmailTxtBox2.$invalid">Provider Email is required/not valid format.</span>
+                                    </div>
+                                </div>
+                                <br><br>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Remarks</label>
+                                    <div class="col-sm-7">
+                                        <textarea name="remarksTxtArea2" class="form-control" ng-model="drugs.remarks"
+                                                  rows="3"
+                                                  placeholder="Remarks...."></textarea>
+                                    </div>
+                                </div>
+                                <br><br><br><br><br>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Add to Stock</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+
+</div>
+

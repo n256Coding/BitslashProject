@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+
+    <title>SLIIT HIS</title>
+
+    <script src="../../assets/js/jquery-3.2.1.min.js"></script>
+    <script src="../../assets/js/angular.js"></script>
+    <script src="../../assets/js/angular-route.js"></script>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
+    <script src="../../assets/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+
+    <script src="../../assets/js/jspdf.debug.js"></script>
+    <script src="../../assets/js/jspdf.plugin.autotable.js"></script>
+    <script src="../../assets/js/angular-datepicker.js"></script>
+    <link rel="stylesheet" href="../../assets/css/angular-datepicker.css">
+    <link rel="stylesheet" href="../../assets/css/emailViewerStyles.css">
+
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+    <script src="app/controllers/userController.js"></script>
+    <script src="app/controllers/mainController.js"></script>
+    <script src="app/services/authService.js"></script>
+    <script src="app/controllers/managmentController.js"></script>
+    <script src="app/controllers/dispenseController.js"></script>
+    <script src="app/controllers/requestController.js"></script>
+    <script src="app/controllers/newperscriptionController.js"></script>
+    <link rel="stylesheet" href="../../assets/css/scrolling-nav.css">
+
+    <script src="app/services/email.data.store.service.js"></script>
+    <script src="app/services/orderInvoice.service.js"></script>
+    <script src="app/services/stock.data.store.service.js"></script>
+    <script src="app/controllers/viewOrderConntroller.js"></script>
+    <script src="app/controllers/makeOrderConntroller.js"></script>
+    <script src="app/controllers/email.controller.js"></script>
+    <script src="app/filter/date.filter.js"></script>
+    <script src="app/controllers/addBatchController.js"></script>
+    <script src="app/controllers/viewBatchController.js"></script>
+    <script src="app/controllers/patientController.js"></script>
+    <script src="app/controllers/viewDrugController.js"></script>
+
+
+    <script src="../../assets/js/angular-material.js"></script>
+    <link rel="stylesheet" href="../../assets/css/angular-material.css">
+    <script src="../../assets/js/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+    <script src="../../assets/js/angular-aria.js"></script>
+    <script src="../../assets/js/ng-file-upload.min.js"></script>
+    <script src="../../assets/js/ng-file-upload-shim.min.js"></script>
+    <script src="../../assets/js/angular-animate.js"></script>
+    <link rel="stylesheet" href="../../assets/css/navbar.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap-theme.css">
+
+
+
+
+    <style type="text/css">
+
+
+        html, body, .carousel,  .carousel-inner, .carousel-inner .item {
+            height: 100%;
+        }
+
+        .navbar-brand {
+            text-align: left;
+            font-size: x-large;
+        }
+
+        .viewClass{
+            margin-top: 30px;
+
+        }
+
+
+    </style>
+
+
+
+</head>
+
+<body ng-app="App" ng-controller="mainControl" >
+
+<!--carousel-->
+<div id ="myCarousel" class="carousel slide" ng-show="!loggedChecker">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1" ></li>
+        <li data-target="#myCarousel" data-slide-to="2" ></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item ">
+            <img src="../../assets/images/ss-pharmaceuticals-pills-drugs-medical-health1.jpg" height="1000" alt="Beach" class="img-responsive">
+            <div class="carousel-caption">
+                <h2>Health</h2>
+                <h4>Health is the level of functional and metabolic efficiency of a living organism</h4>
+            </div>
+
+        </div>
+
+
+
+        <div class="item">
+
+            <img src="../../assets/images/pharmacist-talking-phone-pharmacy-other-footage-011701905_prevstill.jpeg" height="1000" alt="p" class="img-responsive">
+            <div class="carousel-caption">
+                <h2>Pharmacy</h2>
+                <h4>Pharmacy is the science and technique of preparing and dispensing drugs</h4>
+            </div>
+        </div>
+
+
+
+        <div class="item active">
+            <img src="../../assets/images/patient.jpg" height="1000" width="1880" alt="a" class="img-responsive">
+            <div class="carousel-caption">
+                <h2>Hospital</h2>
+                <h4>A hospital is a health care institution providing patient treatment with specialized medical and nursing staff and medical equipment</h4>
+            </div>
+        </div>
+    </div>
+
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</div>
+
+
+
+
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand scroll-top" href="#">Digital Pulz Hospital</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" >
+                <li><a href="#" ng-show="!loggedChecker">Home</a></li>
+                <li><a href="#managment" ng-show="loggedChecker && authorized">Request</a></li>
+                <li><a href = "#dispense" ng-show="loggedChecker && !authorized">Dispense</a></li>
+                <li><a href = "#request" ng-show="loggedChecker && !authorized">Request</a></li>
+                <li><a href = "#newPrescription" ng-show="loggedChecker && !authorized">New Prescription</a></li>
+                <li><a href = "#patient" ng-show="loggedChecker && authorized">Patient</a></li>
+
+                <li class="Orders">
+                    <a ng-show="loggedChecker && authorized"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#orderViewer"  ng-show="loggedChecker && authorized" >View Order</a></li>
+                        <li><a href="#makeOrder"  ng-show="loggedChecker && authorized" >Make Order</a></li>
+                    </ul>
+                </li>
+
+                <li class="Batch">
+                    <a ng-show="loggedChecker && authorized"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Batch<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#addBatch"  ng-show="loggedChecker && authorized" >Add Batch</a></li>
+                        <li><a href="#viewBatch"  ng-show="loggedChecker && authorized" >View Batch</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="drug">
+                    <a ng-show="loggedChecker && authorized"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Drug<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#viewDrug"  ng-show="loggedChecker && authorized" >View Drug</a></li>
+                        <li><a href="#viewStock"  ng-show="loggedChecker && authorized" >View Stock</a></li>
+                        <li><a href="#addDrug"  ng-show="loggedChecker && authorized" >Add Drug</a></li>
+
+                    </ul>
+                </li>
+
+            </ul>
+
+
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#login"  ng-show="!loggedChecker"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                <li><a href="#logout"  ng-click="logoutUser()" ng-show="loggedChecker"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li><a href="#" ng-show="loggedChecker">Signed in as {{logeduser}}</a> </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container theme-showcase" role="main">
+    <!--
+
+        <div class="jumbotron" ng-show="!loggedChecker">
+            <h1>Hospital Phamacy</h1>
+            <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+
+        </div>
+
+            -->
+
+    <br><br>
+
+    <div  ng-view></div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" ng-click="endSession()" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{modalTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{modalBody}}</p>
+
+                    <div ng-show="hideButton" class="cs-loader">
+                        <div class="cs-loader-inner">
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-hide="hideButton" ng-click="renewSession()" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                    <button type="button" ng-hide="hideButton" ng-click="endSession()" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div> <!-- /container -->
+
+</body>
+</html>

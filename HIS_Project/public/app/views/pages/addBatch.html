@@ -1,0 +1,73 @@
+<div style="..." class="container" ng-controller="addBatchController">
+    <br><br><br><br><br>
+    <div id="scrollable-area">
+        <table class="table">
+            <!------------------------->
+            <th><H3>Select Drug Category</H3></th>
+            <tr>
+                <td><label>Drug category</label></td>
+                <td><select class="form-control" ng-model="drugCategory">
+                    <option value="" hidden>Choose Category</option>
+                    <option value={{drgData.category}} ng-repeat="drgData in drgdatalist | orderBy:'category' as sortedPlaces"
+                            data-ng-if="sortedPlaces[$index-1].category != drgData.category" value="{{drgData.category}}">{{drgData.category}}</option>
+                </select></td>
+            </tr>
+            <!------------------------------------------------------->
+            <tr>
+                <td><label>Drug Name</label></td>
+                <td>
+                    <select class="form-control" ng-model="drugName">
+                        <option value="" hidden>select drug name</option>
+                        <option value={{drgStock.name}} ng-repeat="drgStock in stocklist | orderBy:'name' as sortedPlaces"
+                                data-ng-if="sortedPlaces[$index-1].name != drgStock.name" value="{{drgStock.name}}">{{drgStock.name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Batch Number</label></td>
+                <td><input class="form-control" ng-model="batchNumber"></td>
+            </tr>
+            <tr>
+                <td><label>Type</label></td>
+                <td>
+                    <select class="form-control" ng-model="Type">
+                        <option value="" hidden>select type</option>
+                        <option value={{drgData.type}} ng-repeat="drgData in drgdatalist | orderBy:'type' as sortedPlaces"
+                                data-ng-if="sortedPlaces[$index-1].type != drgData.type" value="{{drgData.type}} ">{{drgData.type}}</option>
+                    </select>
+                </td>
+            </tr>
+            <!------------------------->
+            <tr>
+                <td>
+                    <button class="btn btn-primary" ng-click="addBatch(drugCategory,drugName,batchNumber,Type)">
+                        Add Batch
+                    </button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <!--
+    <table class="table">
+        <thead>
+        <tr>
+            <th>a</th>
+            <th>b</th>
+            <th>c</th>
+            <th>d</th>
+            <th>e</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="drug in batchlist">
+            <td>{{drug.drugCategory}}</td>
+            <td>{{drug.drugName}}</td>
+            <td>{{drug.batchNumber}}</td>
+            <td>{{drug.type}}</td>
+        </tr>
+        </tbody>
+    </table>
+    -->
+</div>

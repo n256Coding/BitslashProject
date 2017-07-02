@@ -1,0 +1,106 @@
+<div style="..." class="container" ng-controller="patientController">
+   <br><br><br>  <br>
+
+    <div id="scrollable-area">
+        <h3 class="title" style="padding-bottom: 10px; border-bottom:groove">Register New Patient</h3>
+        <input value class="form-control" style="width: 40px" readonly ng-model="nextPatientID">
+        <form>
+            <table class="table">
+                <tr><th><h4>Patient Personal Details</h4></th></tr>
+                <tr>
+                    <td><label>Title</label>
+                        <select required class="form-control" ng-model="patient.title">
+                            <option value="Mr">Mr:</option>
+                            <option value="Mrs">Mrs:</option>
+                        </select>
+                    </td>
+                    <td><label>Full Name</label>
+                        <input class="form-control" ng-model="patient.fullName" required>
+                    </td>
+                    <td><label>Other Names</label>
+                        <input class="form-control" ng-model="patient.otherName">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Date Of Birth</label>
+                        <input type="date" class="form-control" ng-model="patient.dateOfBirth">
+                    </td>
+                    <td><label>Gender</label>
+                        <select class="form-control" ng-model="patient.gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </td>
+                    <td><label>Civil Status</label>
+                        <select class="form-control" ng-model="patient.civilStatus">
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                        </select>
+                    </td>
+                </tr>
+                <!--------Patient identity details----------------------->
+                <tr>
+                    <th><h4>Patient Identity Details</h4></th>
+                </tr>
+                <tr>
+                    <td><label>NIC</label><input class="form-control" ng-model="patient.nic"></td>
+                    <td><label>Passport</label><input class="form-control" ng-model="patient.passport"></td>
+                    <td><label>Citizenship</label><input class="form-control" ng-model="patient.citizenship"></td>
+                </tr>
+                <tr>
+                    <td><label>Blood Group</label>
+                        <select class="form-control" ng-model="patient.bGroup">
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+-">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select></td>
+                    <td><label>Preffered Language</label>
+                        <select class="form-control" ng-model="patient.language">
+                            <option value="Sinhala">Sinhala</option>
+                            <option value="English">English</option>
+                            <option value="Tamil">Tamil</option>
+                        </select></td>
+                    </td>
+                </tr>
+
+                <!--------contact details------>
+                <tr>
+                    <th><h4>Patient Contact Details</h4></th>
+                </tr>
+                <tr>
+                    <td><label>Address</label>
+                        <input class="form-control"  placeholder="Enter a location" ng-model="patient.address">
+                    </td>
+                    <td><label>Phone</label>
+                        <input class="form-control" ng-model="patient.phone">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Contact Person Name</label>
+                        <input class="form-control" ng-model="patient.cPersonName">
+                    </td>
+                    <td><label>Contact Person Tel</label>
+                        <input class="form-control" ng-model="patient.cPersonTel">
+                    </td>
+                </tr>
+                <!------------other details------------------->
+            </table>
+        </form>
+        <div style="padding-bottom: 20px"><h4>Patient Other Details</h4>
+            <textarea class="form-control" rows="5"  style="resize: none;" ng-model="patient.remark" ></textarea>
+            <button  class="btn btn-primary" style="margin: 20px ; width: 100px" type="submit"
+                     ng-click="addPatient(nextPatientID,patient.title,patient.fullName,patient.otherName,patient.dateOfBirth,
+                     patient.gender,patient.civilStatus,patient.nic,patient.passport,patient.citizenship,patient.bGroup,patient.language,
+                     patient.address,patient.phone,patient.cPersonName,patient.cPersonTel,patient.remark)">Register</button>
+            <!--
+            <table>
+                <tbody><tr><td ng-repeat="patient in patientlist" ng-if="$last">{{patient._id}}</td></tr></tbody>
+            </table> -->
+        </div>
+    </div>
+</div>

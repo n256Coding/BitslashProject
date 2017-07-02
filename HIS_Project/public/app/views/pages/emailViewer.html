@@ -1,0 +1,62 @@
+<div id="emailViewer">
+    <br><br><br>
+    <div style="width: 100%; margin: 10px;">
+        <h2>Drug Request Mail Sender</h2>
+        <form name="emailForm">
+        <table id="email-send-form" style="width: 85%">
+            <tr>
+                <td>From: </td>
+                <td><input type="text" value="bitslashPharmacy@gmail.com" class="form-control" ng-disabled="true" name="fromAddress"/></td>
+            </tr>
+            <tr>
+                <td>To: </td>
+                <td><input type="text" ng-model="emailContent.to" class="form-control" name="toAddress"/></td>
+            </tr>
+            <tr>
+                <td>Subject: </td>
+                <td><input type="text" value="Drug Reorder Request" class="form-control" ng-disabled="true" name="subject" ng-model="emailContent.subject"/></td>
+            </tr>
+            <tr>
+                <td>Content: </td>
+                <td>
+                    <textarea ng-model="emailContent.text" class="form-control" name="content" ng-show="false">Hello World</textarea>
+                    <div class="well" id="emailHtmlContent">
+                    <p>Dear Officer, <br>The Quantities of the below Drugs are Low.</p>
+                    <p>We need them with following quantities soon.</p>
+                    <table class="table tab-content">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Qty</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in emailData">
+                            <td>{{data.drug_name}}</td>
+                            <td>{{data.Type}}</td>
+                            <td>{{data.approved_quantity}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="collapse" id="collapseExample" aria-expanded="false">
+                        <textarea class="form-control" style="width: 100%" id="extraContent" ng-model="emailContent.extraContent"></textarea>
+                    </div>
+                    <p>Please be kind enough to send us new stocks<br>
+                    <br>
+                    Best Regards,<br>
+                    Chief Pharmasist</p>
+                    </div>
+                    <div>
+                        <button data-toggle="collapse" data-target="#collapseExample" aria-controls="collapseExample" class="btn-sm btn-info">Add Content</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="button" value="SEND" ng-click="sendEmail(emailContent)" class="btn btn-primary" ng-model="sendMailButton"/></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+
+    <div style="..." class="container" ng-controller="managmentConntroller">
+        <br><br>  <br><br>
+        <div id="scrollable-area">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Drug Name</th>
+                    <th>Requested Quantity</th>
+                    <th>Availability Quantity</th>
+                    <th>Date</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Approved Quantity</th>
+                    <th>Approve</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="request in requestlist">
+                    <td>{{request.RequestID}}</td>
+                    <td>{{request.drug_name}}</td>
+                    <td>{{request.requested_quantity}}</td>
+                    <td>{{request.quantity}}</td>
+                    <td>{{request.date}}</td>
+                    <td>{{request.department}}</td>
+                    <td>{{request.status}}</td>
+                    <td><input type="text" class="form-control" ng-model="request.approved_quantity"></td>
+                    <td><button class="btn btn-info" ng-click="approveRequest(request._id,request.approved_quantity,request.quantity)">Approve</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
